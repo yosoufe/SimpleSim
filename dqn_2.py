@@ -91,11 +91,12 @@ class QNet(nn.Module):
 
 
 all_actions = torch.tensor([
-    [0, 0, 0, 0], # <---- Stay still
+    [0, 0, 0, 0], # <---- Stay still, Open claw
     [-1, 1, 0, 0], # <---- Spin left
     [1, -1, 0, 0], # <---- Spin right
     [1, 1, 0, 0], # <---- Move forward
-    [-1, -1, 0, 0] # <---- Move backward
+    [-1, -1, 0, 0], # <---- Move backward
+    [0, 0, 0, 1], # <---- close claw
 ], dtype=torch.float32, device=device)
 
 model = QNet(
@@ -141,6 +142,7 @@ if __name__ == "__main__":
             if terminated:
                 break
             env.render()
+        print("obs", obs)
 
         print(f"Episode {episode} finished with reward {reward}")
 
